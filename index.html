@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aura Chic Boutique - POS v7.51</title>
+    <title>POS System v7.52 - Powered by Dazzle and Shine</title>
     <!-- Standalone Mobile App Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    ​​<meta name="mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
 
     <meta name="theme-color" content="#556B2F">
     
     <!-- Standalone App Icon -->
     <link rel="icon" type="image/jpeg" href="logo.jpg">
     <link rel="apple-touch-icon" href="logo.jpg">
-<link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="manifest.json">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -48,12 +48,12 @@
     <div id="auth-overlay" class="fixed inset-0 bg-brand/95 backdrop-blur-md z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 space-y-5 text-center">
             <div class="w-28 h-28 rounded-full mx-auto border-4 border-brand-accent shadow-xl overflow-hidden bg-white flex items-center justify-center p-1">
-                <img src="logo.jpg" alt="Aura Chic Logo" class="w-full h-full object-cover rounded-full">
+                <img id="login-logo-img" src="logo.jpg" alt="Store Logo" class="w-full h-full object-cover rounded-full">
             </div>
             <div>
-                <h2 class="text-2xl font-black tracking-wider text-gray-900 uppercase" style="font-family: serif;">AURA CHIC</h2>
-                <p class="text-xs font-bold tracking-widest text-brand uppercase mt-0.5">Boutique POS v7.51</p>
-                <p class="text-xs text-gray-500 mt-2">+263 773 452 684 | maringesamantha9@gmail.com</p>
+                <h2 id="login-store-title" class="text-2xl font-black tracking-wider text-gray-900 uppercase" style="font-family: serif;">MY STORE</h2>
+                <p class="text-xs font-bold tracking-widest text-brand uppercase mt-0.5">Multi-Tenant POS v7.52</p>
+                <p id="login-store-contact" class="text-xs text-gray-500 mt-2">Configure contact in Settings</p>
             </div>
 
             <div class="space-y-4 text-left" autocomplete="off">
@@ -70,7 +70,7 @@
                     <span>Login to POS System</span>
                 </button>
             </div>
-            <p class="text-xs text-gray-400">Secure Access Login (Auto-locks after 5 min idle)</p>
+            <p class="text-xs text-gray-400">Powered by Dazzle and Shine Incorporated</p>
         </div>
     </div>
 
@@ -80,17 +80,12 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <div class="w-12 h-12 rounded-full bg-white border-2 border-brand-accent shadow-md flex items-center justify-center overflow-hidden p-0.5">
-                        <svg viewBox="0 0 500 500" class="w-full h-full object-contain" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="250" cy="250" r="240" fill="#fdfbf7"/>
-                            <path d="M120 280 C100 200, 180 140, 260 160 C340 180, 360 260, 320 320 C280 380, 160 380, 120 280 Z" fill="none" stroke="#803b3b" stroke-width="14" stroke-linecap="round"/>
-                            <rect x="200" y="220" width="50" height="70" rx="10" fill="#e8daef" stroke="#512e5f" stroke-width="6"/>
-                            <path d="M270 240 C270 220, 310 220, 310 240 L330 300 C330 315, 250 315, 250 300 Z" fill="#f9e79f" stroke="#7d6608" stroke-width="6"/>
-                        </svg>
+                        <img id="header-logo-img" src="logo.jpg" alt="Logo" class="w-full h-full object-cover rounded-full">
                     </div>
                     <div>
                         <h1 class="text-lg font-extrabold tracking-wide flex items-center gap-2" style="font-family: serif;">
-                            AURA CHIC
-                            <span class="text-xs bg-brand-accent text-white px-2 py-0.5 rounded-full font-bold font-sans">POS v7.51</span>
+                            <span id="header-store-name">MY STORE</span>
+                            <span class="text-xs bg-brand-accent text-white px-2 py-0.5 rounded-full font-bold font-sans">POS v7.52</span>
                         </h1>
                         <p class="text-sm text-gray-200">User: <span id="current-user-display" class="font-bold text-brand-accent text-base"></span> <span id="role-badge" class="ml-1 text-xs bg-white/20 px-2 py-0.5 rounded font-bold"></span></p>
                     </div>
@@ -635,20 +630,49 @@
             </div>
         </div>
 
-        <!-- 11. SETTINGS TAB -->
+        <!-- 11. SETTINGS & MULTI-TENANT BRANDING TAB -->
         <div id="view-settings" class="tab-view hidden space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Store Profile & Branding -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
+                    <h2 class="text-xl font-bold text-gray-900"><i class="fas fa-store text-brand mr-2"></i> Store Profile & Multi-Tenant Branding</h2>
+                    <p class="text-sm text-gray-500">Configure your individual shop name, phone number, email, and logo for receipts and screens.</p>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Store / Business Name</label>
+                            <input type="text" id="setting-store-name" placeholder="e.g. My Boutique / Hardware" class="w-full px-4 py-2 border rounded-xl text-sm font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Phone Number</label>
+                            <input type="text" id="setting-store-phone" placeholder="e.g. +263 77..." class="w-full px-4 py-2 border rounded-xl text-sm font-semibold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Email / Info</label>
+                            <input type="text" id="setting-store-email" placeholder="e.g. info@business.com" class="w-full px-4 py-2 border rounded-xl text-sm font-semibold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Logo Filename</label>
+                            <input type="text" id="setting-store-logo" placeholder="logo.jpg" class="w-full px-4 py-2 border rounded-xl text-sm font-semibold">
+                        </div>
+                        <button onclick="saveStoreSettings()" class="w-full bg-brand text-white py-3 rounded-xl font-bold transition shadow hover:bg-brand-dark">
+                            Save Store Profile
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Backups & Security -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
                     <h2 class="text-xl font-bold text-gray-900"><i class="fas fa-database text-brand mr-2"></i> Automated & Manual Backups</h2>
                     <p class="text-sm text-gray-500">Download manual backup JSON.</p>
                     <button onclick="triggerManualBackup()" class="w-full bg-brand hover:bg-brand-dark text-white py-3 rounded-xl font-bold transition shadow">
                         <i class="fas fa-download mr-2"></i> Download Manual Backup JSON
                     </button>
-                </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
-                    <h2 class="text-xl font-bold text-gray-900"><i class="fas fa-key text-brand mr-2"></i> Master Admin PIN</h2>
-                    <input type="password" id="new-admin-password" placeholder="New Master Admin PIN" class="w-full px-4 py-2 border rounded-xl text-base font-semibold">
-                    <button onclick="updateAdminPassword()" class="bg-brand text-white px-4 py-2 rounded-xl font-bold">Update PIN</button>
+                    <div class="pt-4 border-t">
+                        <h3 class="font-bold text-gray-900 text-base mb-1"><i class="fas fa-key text-brand mr-2"></i> Master Admin PIN</h3>
+                        <input type="password" id="new-admin-password" placeholder="New Master Admin PIN" class="w-full px-4 py-2 border rounded-xl text-base font-semibold mb-2">
+                        <button onclick="updateAdminPassword()" class="w-full bg-gray-800 text-white py-2.5 rounded-xl font-bold text-sm">Update PIN</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -777,7 +801,7 @@
             <form id="product-form" onsubmit="saveProduct(event)" class="space-y-3">
                 <input type="hidden" id="edit-product-id">
                 <input type="text" id="prod-name" required placeholder="Product Name" class="w-full px-4 py-2 border rounded-xl text-base">
-                <input type="text" id="prod-category" required placeholder="Category (e.g. Inuka, Lass)" class="w-full px-4 py-2 border rounded-xl text-base">
+                <input type="text" id="prod-category" required placeholder="Category (e.g. Drinks, Clothing)" class="w-full px-4 py-2 border rounded-xl text-base">
                 <div class="grid grid-cols-2 gap-2">
                     <input type="number" step="0.01" id="prod-cost" required placeholder="Cost Price ($)" class="w-full px-4 py-2 border rounded-xl text-base">
                     <input type="number" step="0.01" id="prod-price" required placeholder="Selling Price ($)" class="w-full px-4 py-2 border rounded-xl text-base">
@@ -801,7 +825,7 @@
             <form onsubmit="saveStockReceiving(event)" class="space-y-3">
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1">Supplier Name & Contact (Optional)</label>
-                    <input type="text" id="recv-supplier" placeholder="e.g. Inuka Wholesale / 077..." class="w-full px-4 py-2 border rounded-xl text-sm font-bold">
+                    <input type="text" id="recv-supplier" placeholder="e.g. Supplier / 077..." class="w-full px-4 py-2 border rounded-xl text-sm font-bold">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1">Select Existing Product from System *</label>
@@ -862,7 +886,7 @@
                 <input type="hidden" id="staff-edit-idx">
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1">Staff Username / Name *</label>
-                    <input type="text" id="staff-username" required placeholder="e.g. Pikini or Samantha" class="w-full px-4 py-2 border rounded-xl text-sm font-bold">
+                    <input type="text" id="staff-username" required placeholder="e.g. John" class="w-full px-4 py-2 border rounded-xl text-sm font-bold">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1">Select Job Role *</label>
@@ -941,14 +965,13 @@
 
     <!-- APPLICATION JAVASCRIPT -->
     <script>
-        const initialDefaultProducts = [
-            { id: 1, code: "AC-PRD-001", name: "Tissue oil", category: "Lass", cost: 6.00, price: 10.00, stock: 2, supplier: "Inuka Wholesalers", minStock: 3, promotion: true, discountPct: 10, promoExpiresAt: 0 },
-            { id: 2, code: "AC-PRD-002", name: "Face cream", category: "Lass", cost: 7.00, price: 12.00, stock: 2, supplier: "Inuka Wholesalers", minStock: 2, promotion: false, discountPct: '', promoExpiresAt: 0 },
-            { id: 3, code: "AC-PRD-003", name: "Roll on", category: "Lass", cost: 3.00, price: 5.00, stock: 2, supplier: "Local Vendor", minStock: 2, promotion: false, discountPct: '', promoExpiresAt: 0 },
-            { id: 4, code: "AC-PRD-004", name: "Body cream", category: "Lass", cost: 9.00, price: 15.00, stock: 2, supplier: "Inuka Wholesalers", minStock: 2, promotion: true, discountPct: 15, promoExpiresAt: 0 },
-            { id: 5, code: "AC-PRD-005", name: "Serum", category: "Lass", cost: 11.00, price: 18.00, stock: 1, supplier: "Lass Labs", minStock: 2, promotion: false, discountPct: '', promoExpiresAt: 0 },
-            { id: 6, code: "AC-PRD-006", name: "Mist", category: "Inuka", cost: 8.00, price: 14.00, stock: 3, supplier: "Inuka Wholesalers", minStock: 2, promotion: true, discountPct: 10, promoExpiresAt: 0 }
-        ];
+        // Multi-Tenant Store Branding Settings stored in localStorage
+        let storeSettings = JSON.parse(localStorage.getItem('aura_store_settings')) || {
+            name: "MY STORE",
+            phone: "+263 770 000 000",
+            email: "support@dazzleandshine.co.zw",
+            logo: "logo.jpg"
+        };
 
         let currentUser = localStorage.getItem('aura_current_user') || '';
         let currentRole = localStorage.getItem('aura_current_role') || 'Cashier';
@@ -957,12 +980,11 @@
         
         let customRoles = JSON.parse(localStorage.getItem('aura_custom_roles')) || ['Cashier', 'Accountant', 'Receiving Clerk', 'Buyer', 'Security Guard', 'Director', 'Administrator', 'Supervisor'];
         let staffAccounts = JSON.parse(localStorage.getItem('aura_staff')) || [
-            { username: 'Samantha', role: 'Administrator', password: '1234', permissions: ['pos', 'inventory', 'receiving', 'stocktake', 'dailyreport', 'accounts', 'credit', 'loyalty', 'staff', 'dashboard', 'settings'] },
-            { username: 'Admin', role: 'Administrator', password: '1234', permissions: ['pos', 'inventory', 'receiving', 'stocktake', 'dailyreport', 'accounts', 'credit', 'loyalty', 'staff', 'dashboard', 'settings'] },
-            { username: 'Pikini', role: 'Cashier', password: '1234', permissions: ['pos'] }
+            { username: 'Admin', role: 'Administrator', password: '1234', permissions: ['pos', 'inventory', 'receiving', 'stocktake', 'dailyreport', 'accounts', 'credit', 'loyalty', 'staff', 'dashboard', 'settings'] }
         ];
 
-        let products = JSON.parse(localStorage.getItem('aura_products')) || initialDefaultProducts;
+        // Clean empty arrays for a fresh multi-client platform start
+        let products = JSON.parse(localStorage.getItem('aura_products')) || [];
         let vipCustomers = JSON.parse(localStorage.getItem('aura_vip_customers')) || [];
         let cart = [];
         let heldReceipts = JSON.parse(localStorage.getItem('aura_held')) || [];
@@ -982,11 +1004,39 @@
         let idleTimer = null;
 
         window.onload = function() {
+            applyStoreBranding();
             ensureProductCodes();
             checkPromoExpirations();
             logout();
             resetInactivityTimer();
         };
+
+        function applyStoreBranding() {
+            document.getElementById('login-store-title').innerText = storeSettings.name;
+            document.getElementById('login-store-contact').innerText = `${storeSettings.phone} | ${storeSettings.email}`;
+            document.getElementById('login-logo-img').src = storeSettings.logo;
+            
+            document.getElementById('header-store-name').innerText = storeSettings.name;
+            document.getElementById('header-logo-img').src = storeSettings.logo;
+        }
+
+        function renderSettingsTab() {
+            document.getElementById('setting-store-name').value = storeSettings.name;
+            document.getElementById('setting-store-phone').value = storeSettings.phone;
+            document.getElementById('setting-store-email').value = storeSettings.email;
+            document.getElementById('setting-store-logo').value = storeSettings.logo;
+        }
+
+        function saveStoreSettings() {
+            storeSettings.name = document.getElementById('setting-store-name').value.trim() || "MY STORE";
+            storeSettings.phone = document.getElementById('setting-store-phone').value.trim();
+            storeSettings.email = document.getElementById('setting-store-email').value.trim();
+            storeSettings.logo = document.getElementById('setting-store-logo').value.trim() || "logo.jpg";
+            
+            localStorage.setItem('aura_store_settings', JSON.stringify(storeSettings));
+            applyStoreBranding();
+            alert('Store profile and branding updated successfully!');
+        }
 
         function resetInactivityTimer() {
             clearTimeout(idleTimer);
@@ -1002,7 +1052,7 @@
             let updated = false;
             products.forEach((p, idx) => {
                 if (!p.code) {
-                    p.code = 'AC-PRD-' + String(idx + 1).padStart(3, '0');
+                    p.code = 'PRD-' + String(idx + 1).padStart(3, '0');
                     updated = true;
                 }
                 if (p.minStock === undefined) { p.minStock = 2; updated = true; }
@@ -1083,12 +1133,12 @@
         }
 
         function triggerManualBackup() {
-            const dataDump = { date: new Date().toISOString(), products, vipCustomers, salesHistory, creditLedger, accountCustomers, receivingHistory, priceAuditLog, staffAccounts, customRoles };
+            const dataDump = { storeSettings, date: new Date().toISOString(), products, vipCustomers, salesHistory, creditLedger, accountCustomers, receivingHistory, priceAuditLog, staffAccounts, customRoles };
             const blob = new Blob([JSON.stringify(dataDump, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `AuraChic_Manual_Backup_${new Date().toISOString().split('T')[0]}.json`;
+            a.download = `${storeSettings.name.replace(/\s+/g, '_')}_Backup_${new Date().toISOString().split('T')[0]}.json`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -1164,6 +1214,7 @@
             if (tabId === 'loyalty') renderPromoAndVipDashboard();
             if (tabId === 'staff') renderStaffTable();
             if (tabId === 'dashboard') renderDashboard();
+            if (tabId === 'settings') renderSettingsTab();
             resetInactivityTimer();
         }
 
@@ -1215,7 +1266,7 @@
                 }
             });
 
-            const receiptNum = 'AC-REC-' + String(receiptCounter++).padStart(4, '0');
+            const receiptNum = 'REC-' + String(receiptCounter++).padStart(4, '0');
             const now = new Date();
             const timestamp = now.toLocaleString();
             const hour24 = now.getHours();
@@ -1226,7 +1277,7 @@
             const dateStrISO = `${year}/${month}/${day}`;
             const dateHyphenISO = `${year}-${month}-${day}`;
 
-            let receiptStr = `*AURA CHIC BOUTIQUE*\nTel: +263 773 452 684\n--------------------------------\nReceipt: ${receiptNum}\nDate: ${timestamp}\nCustomer: ${clientName}\nType: ${currentSaleType} (${payMethod})\n--------------------------------\n`;
+            let receiptStr = `*${storeSettings.name.toUpperCase()}*\nTel: ${storeSettings.phone}\n--------------------------------\nReceipt: ${receiptNum}\nDate: ${timestamp}\nCustomer: ${clientName}\nType: ${currentSaleType} (${payMethod})\n--------------------------------\n`;
             
             cart.forEach(i => { 
                 if (i.isPromotion) {
@@ -1238,14 +1289,14 @@
 
             receiptStr += `--------------------------------\n*TOTAL: $${total.toFixed(2)}*\n`;
             if (balance > 0) receiptStr += `Paid Today: $${deposit.toFixed(2)}\n*Balance Owed: $${balance.toFixed(2)}*\n`;
-            receiptStr += `--------------------------------\nStaff: ${currentUser} (${currentRole})\nMay God bless your hustles!!!`;
+            receiptStr += `--------------------------------\nStaff: ${currentUser} (${currentRole})\nPowered by Dazzle and Shine`;
 
             lastReceiptText = receiptStr;
             lastCustomerPhone = clientPhone;
 
             salesHistory.unshift({
                 id: Date.now(), receipt: receiptNum, time: timestamp, dateIso: dateStrISO, dateHyphen: dateHyphenISO, hour: hour24, cashier: currentUser,
-                store: 'Main Store / POS 1', type: currentSaleType, paymentMethod: payMethod, items: [...cart], total, phone: clientPhone, receiptStr, voided: false
+                store: storeSettings.name, type: currentSaleType, paymentMethod: payMethod, items: [...cart], total, phone: clientPhone, receiptStr, voided: false
             });
 
             if (balance > 0) {
@@ -1300,7 +1351,6 @@
             tbody.innerHTML = '';
             
             let expectedCash = 0, ecoCashTotal = 0, zigTotal = 0, swipeTotal = 0;
-
             const cleanFilterDate = dateVal.replace(/[-\/]/g, '');
 
             const filteredSales = salesHistory.filter(s => {
@@ -1333,7 +1383,7 @@
                 } else if (method.includes('swipe') || method.includes('card')) {
                     swipeTotal += s.total;
                 } else {
-                    ecoCashTotal += s.total; // Default digital fallback
+                    ecoCashTotal += s.total;
                 }
 
                 const tr = document.createElement('tr');
@@ -1350,7 +1400,7 @@
             });
 
             if (filteredSales.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-gray-400 italic">No transactions found for Date: ${dateVal}. (Check Sales History to confirm transaction dates).</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-gray-400 italic">No transactions found for Date: ${dateVal}.</td></tr>`;
             }
 
             const totalDigital = ecoCashTotal + zigTotal + swipeTotal;
@@ -1394,7 +1444,7 @@
             const zig = document.getElementById('method-zig').innerText;
             const swipe = document.getElementById('method-swipe').innerText;
             
-            const msg = `*AURA CHIC SPOT CHECK / CASH-UP*\nDate: ${date} | Time Window: ${hourSlot}\nExpected Cash: ${expected}\nActual Drawer Count: $${parseFloat(actual).toFixed(2)}\nDrawer Variance / Shortage: ${variance}\n--------------------------------\nEcoCash Total: ${ecoCash}\nZiG Total: ${zig}\nSwipe Total: ${swipe}\n--------------------------------\nAudited By: ${currentUser} (${currentRole})\nMay God bless your hustles!!!`;
+            const msg = `*${storeSettings.name.toUpperCase()} CASH-UP*\nDate: ${date} | Window: ${hourSlot}\nExpected Cash: ${expected}\nActual Drawer: $${parseFloat(actual).toFixed(2)}\nVariance: ${variance}\n--------------------------------\nEcoCash: ${ecoCash}\nZiG: ${zig}\nSwipe: ${swipe}\n--------------------------------\nAudited By: ${currentUser} (${currentRole})`;
             
             document.getElementById('whatsapp-report-textarea').value = msg;
             document.getElementById('whatsapp-report-modal').classList.remove('hidden');
@@ -1407,42 +1457,28 @@
             window.open(url, '_blank');
         }
 
-        function closeWhatsappReportModal() {
-            document.getElementById('whatsapp-report-modal').classList.add('hidden');
-        }
-
+        function closeWhatsappReportModal() { document.getElementById('whatsapp-report-modal').classList.add('hidden'); }
         function copyWhatsappReportData() {
             const textarea = document.getElementById('whatsapp-report-textarea');
             textarea.select();
             navigator.clipboard.writeText(textarea.value);
-            alert('WhatsApp message copied to clipboard successfully! You can now paste it directly into WhatsApp.');
+            alert('WhatsApp message copied to clipboard!');
         }
 
-        // FULL PROFESSIONAL CSV EXPORT WITH ALL CASH-UP METRICS
         function openExportModal() {
             const dateVal = document.getElementById('report-date').value;
             const hourSlot = document.getElementById('report-hour-filter').value;
             const expected = document.getElementById('cashup-expected-cash').innerText;
             const actual = parseFloat(document.getElementById('cashup-actual-cash').value || 0).toFixed(2);
             const variance = document.getElementById('cashup-variance').innerText;
-            const ecoCash = document.getElementById('method-ecocash').innerText;
-            const zig = document.getElementById('method-zig').innerText;
-            const swipe = document.getElementById('method-swipe').innerText;
             const runTimestamp = new Date().toLocaleString();
 
-            let csv = `"AURA CHIC BOUTIQUE - CASH-UP & SPOT CHECK REPORT"\n`;
+            let csv = `"${storeSettings.name.toUpperCase()} - CASH-UP & SPOT CHECK REPORT"\n`;
             csv += `"Report Date","${dateVal}","Time Run","${runTimestamp}"\n`;
             csv += `"Audited By","${currentUser} (${currentRole})","Time Filter","${hourSlot}"\n\n`;
-            
-            csv += `"SUMMARY METRICS"\n`;
-            csv += `"Expected Cash in Drawer","${expected}"\n`;
-            csv += `"Actual Physical Drawer Count","$${actual}"\n`;
-            csv += `"Drawer Variance / Shortage","${variance}"\n`;
-            csv += `"EcoCash Total","${ecoCash}"\n`;
-            csv += `"ZiG Total","${zig}"\n`;
-            csv += `"Swipe Total","${swipe}"\n\n`;
-
-            csv += `"DETAILED TRANSACTIONS LOG"\n`;
+            csv += `"Expected Cash","${expected}"\n`;
+            csv += `"Actual Physical Drawer","$${actual}"\n`;
+            csv += `"Variance","${variance}"\n\n`;
             csv += `Receipt #,Time,Cashier,Type,Payment Method,Summary,Total\n`;
             
             const cleanFilterDate = dateVal.replace(/[-\/]/g, '');
@@ -1453,7 +1489,6 @@
             });
 
             const salesToExport = matchingSales.length > 0 ? matchingSales : salesHistory.filter(s => !s.voided);
-
             salesToExport.forEach(s => {
                 const summary = s.items.map(i => i.code + ' - ' + i.name + ' (x' + i.qty + ')').join('; ');
                 csv += `"${s.receipt}","${s.time}","${s.cashier}","${s.type}","${s.paymentMethod || 'USD Cash'}","${summary}",${s.total.toFixed(2)}\n`;
@@ -1463,15 +1498,12 @@
             document.getElementById('export-modal').classList.remove('hidden');
         }
 
-        function closeExportModal() {
-            document.getElementById('export-modal').classList.add('hidden');
-        }
-
+        function closeExportModal() { document.getElementById('export-modal').classList.add('hidden'); }
         function copyExportData() {
             const textarea = document.getElementById('export-textarea');
             textarea.select();
             navigator.clipboard.writeText(textarea.value);
-            alert('Complete cash-up CSV data copied to clipboard successfully! You can paste it directly into Excel or Google Sheets.');
+            alert('CSV data copied to clipboard!');
         }
 
         // ================= 2. INVENTORY & STOCK MANAGEMENT =================
@@ -1479,6 +1511,11 @@
             const tbody = document.getElementById('inventory-table-body');
             tbody.innerHTML = '';
             const isAdminOrSup = currentRole.toLowerCase() === 'administrator' || currentRole.toLowerCase() === 'supervisor';
+
+            if (products.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="p-8 text-center text-gray-400 italic">No products in inventory. Click "New Product" or Import CSV to get started.</td></tr>';
+                return;
+            }
 
             products.forEach(p => {
                 const tr = document.createElement('tr');
@@ -1491,7 +1528,7 @@
                 tr.innerHTML = `
                     <td class="p-4 font-extrabold text-brand">
                         ${p.code}
-                        ${isLowStock ? '<span class="block text-xs text-amber-700 font-bold bg-amber-200 px-1.5 py-0.5 rounded mt-1">Order me, please</span>' : ''}
+                        ${isLowStock ? '<span class="block text-xs text-amber-700 font-bold bg-amber-200 px-1.5 py-0.5 rounded mt-1">Reorder Alert</span>' : ''}
                     </td>
                     <td class="p-4 text-center">
                         <input type="checkbox" ${p.promotion ? 'checked' : ''} ${disabledAttr} onchange="toggleProductPromotion(${p.id}, this)" class="w-6 h-6 accent-brand rounded cursor-pointer">
@@ -1540,7 +1577,7 @@
                 saveData();
                 renderInventoryTable();
                 renderPriceAuditTable();
-                alert(`Price updated successfully for ${p.name}. Audit log recorded.`);
+                alert(`Price updated successfully for ${p.name}.`);
             }
         }
 
@@ -1589,7 +1626,7 @@
                     const disc = parseFloat(discInput);
                     if (isNaN(disc) || disc <= 0) { alert('Invalid discount percentage.'); checkbox.checked = false; return; }
 
-                    const durationInput = prompt(`Enter timeframe duration (e.g., enter number for days like '7', or hours like '12h' or '24h'):`, "7");
+                    const durationInput = prompt(`Enter timeframe duration (e.g. '7' for days, or '24h' for hours):`, "7");
                     if (durationInput === null) { checkbox.checked = false; return; }
                     
                     let durationMs = 7 * 24 * 60 * 60 * 1000;
@@ -1604,7 +1641,7 @@
                     p.promotion = true;
                     p.discountPct = disc;
                     p.promoExpiresAt = Date.now() + durationMs;
-                    alert(`Promotion activated successfully with ${disc}% discount!`);
+                    alert(`Promotion activated with ${disc}% discount!`);
                 } else {
                     p.promotion = false;
                     p.discountPct = '';
@@ -1641,7 +1678,7 @@
         
         function saveProduct(e) {
             e.preventDefault();
-            const newCode = 'AC-PRD-' + String(products.length + 1).padStart(3, '0');
+            const newCode = 'PRD-' + String(products.length + 1).padStart(3, '0');
             
             products.push({
                 id: Date.now(), 
@@ -1660,7 +1697,7 @@
             saveData();
             closeProductModal();
             renderInventoryTable();
-            alert('New product successfully added to system catalog!');
+            alert('New product successfully added to catalog!');
         }
 
         function exportInventoryCSV() {
@@ -1672,7 +1709,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `AuraChic_Inventory_${new Date().toISOString().split('T')[0]}.csv`;
+            a.download = `${storeSettings.name.replace(/\s+/g, '_')}_Inventory_${new Date().toISOString().split('T')[0]}.csv`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -1704,7 +1741,7 @@
                             existing.price = price;
                             existing.supplier = supplier;
                         } else {
-                            const newCode = 'AC-PRD-' + String(products.length + 1).padStart(3, '0');
+                            const newCode = 'PRD-' + String(products.length + 1).padStart(3, '0');
                             products.push({ id: Date.now() + Math.random(), code: newCode, name, category, cost, price, supplier, minStock, stock: qty, promotion: false, discountPct: '', promoExpiresAt: 0 });
                         }
                         addedCount++;
@@ -1712,7 +1749,7 @@
                 });
                 saveData();
                 renderInventoryTable();
-                alert(`Successfully imported / restocked ${addedCount} products from CSV file!`);
+                alert(`Successfully imported / restocked ${addedCount} products from CSV!`);
             };
             reader.readAsText(file);
         }
@@ -1757,34 +1794,26 @@
             if (!isNaN(selling) && selling > 0) product.price = selling;
             product.supplier = supplier;
 
-            const grnNum = 'AC-GRN-' + String(grnCounter++).padStart(4, '0');
+            const grnNum = 'GRN-' + String(grnCounter++).padStart(4, '0');
             const receivedDate = new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString();
 
             receivingHistory.unshift({
-                id: Date.now(),
-                grn: grnNum,
-                date: receivedDate,
-                receiver: currentUser,
-                supplier: supplier,
-                productCode: product.code,
-                productName: product.name,
-                qty: qty,
-                transport: transportTotal,
-                unitCost: product.cost
+                id: Date.now(), grn: grnNum, date: receivedDate, receiver: currentUser, supplier,
+                productCode: product.code, productName: product.name, qty, transport: transportTotal, unitCost: product.cost
             });
 
             saveData();
             closeReceiveModal();
             renderReceivingHistoryTable();
             renderInventoryTable();
-            alert(`Delivery received successfully! Transport cost ($${transportTotal.toFixed(2)}) prorated into unit cost ($${product.cost.toFixed(2)}). GRN #${grnNum} generated.`);
+            alert(`Delivery received successfully! GRN #${grnNum} generated.`);
         }
 
         function renderReceivingHistoryTable() {
             const tbody = document.getElementById('receiving-history-body');
             tbody.innerHTML = '';
             if (receivingHistory.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-gray-400 italic">No deliveries recorded yet. Click "Receive Delivery" above.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-gray-400 italic">No deliveries recorded yet.</td></tr>`;
                 return;
             }
 
@@ -1802,7 +1831,7 @@
             });
         }
 
-        // ================= STOCK TAKE AUDIT & LOSS REPORT =================
+        // ================= 4. STOCK TAKE AUDIT =================
         function renderStockTakeTable() {
             const tbody = document.getElementById('stocktake-table-body');
             tbody.innerHTML = '';
@@ -1818,9 +1847,7 @@
                     <td class="p-3 font-bold">${p.name}</td>
                     <td class="p-3">${p.category}</td>
                     <td class="p-3 font-bold text-brand" id="st-sys-${idx}">${p.stock}</td>
-                    <td class="p-3">
-                        <input type="number" id="st-phys-${idx}" oninput="calculateStockTakeRow(${idx})" class="w-24 px-2.5 py-1.5 border-2 rounded-lg font-bold text-center bg-white" placeholder="Count">
-                    </td>
+                    <td class="p-3"><input type="number" id="st-phys-${idx}" oninput="calculateStockTakeRow(${idx})" class="w-24 px-2.5 py-1.5 border-2 rounded-lg font-bold text-center bg-white" placeholder="Count"></td>
                     <td class="p-3 font-bold" id="st-var-${idx}">0</td>
                     <td class="p-3">$${p.cost.toFixed(2)}</td>
                     <td class="p-3">$${p.price.toFixed(2)}</td>
@@ -1832,10 +1859,7 @@
             });
         }
 
-        function startStockTake() {
-            renderStockTakeTable();
-            alert('Stock Take table initialized! Enter physical ground counts in the column.');
-        }
+        function startStockTake() { renderStockTakeTable(); alert('Stock Take table initialized!'); }
 
         function calculateStockTakeRow(idx) {
             const p = products[idx];
@@ -1848,11 +1872,9 @@
                 document.getElementById(`st-profitloss-${idx}`).innerText = '$0.00';
                 return;
             }
-
             const physQty = parseInt(physInput) || 0;
             const variance = physQty - sysQty;
             const shortage = Math.max(0, sysQty - physQty);
-
             const costLoss = shortage * p.cost;
             const salesLoss = shortage * p.price;
             const profitLoss = salesLoss - (shortage * p.cost);
@@ -1877,40 +1899,30 @@
                 const costLoss = shortage * p.cost;
                 const salesLoss = shortage * p.price;
                 const profitLoss = salesLoss - costLoss;
-
                 csv += `"${p.code}","${p.name}","${p.category}",${sysQty},${physInput !== '' ? physInput : ''},${variance},${p.cost.toFixed(2)},${p.price.toFixed(2)},${costLoss.toFixed(2)},${salesLoss.toFixed(2)},${profitLoss.toFixed(2)}\n`;
             });
-
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `AuraChic_StockTake_Report_${new Date().toISOString().split('T')[0]}.csv`;
+            a.download = `StockTake_Report_${new Date().toISOString().split('T')[0]}.csv`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
         }
 
-        // ================= CUSTOMER GRADING & PROMOTION BROADCAST =================
+        // ================= 8. PROMOS & VIPs =================
         function renderPromoAndVipDashboard() {
             const promoList = document.getElementById('promo-products-list');
             promoList.innerHTML = '';
             const promos = products.filter(p => p.promotion && p.discountPct !== '' && p.discountPct !== null && !isNaN(p.discountPct) && parseFloat(p.discountPct) > 0);
             
             if (promos.length === 0) {
-                promoList.innerHTML = '<p class="text-gray-400 text-center py-6 text-sm italic">No products currently marked for promotion with a discount percentage.</p>';
+                promoList.innerHTML = '<p class="text-gray-400 text-center py-6 text-sm italic">No products currently marked for promotion.</p>';
             } else {
                 promos.forEach(p => {
                     const disc = parseFloat(p.discountPct) || 0;
                     const promoPrice = p.price * (1 - disc / 100);
-                    const timeLeftMs = p.promoExpiresAt ? p.promoExpiresAt - Date.now() : 0;
-                    let timeLeftStr = 'Manual';
-                    if (timeLeftMs > 0) {
-                        const hoursLeft = Math.ceil(timeLeftMs / (60 * 60 * 1000));
-                        if (hoursLeft <= 24) timeLeftStr = `${hoursLeft} hour(s)`;
-                        else timeLeftStr = `${Math.ceil(hoursLeft / 24)} day(s)`;
-                    }
-
                     const div = document.createElement('div');
                     div.className = "p-3 border rounded-xl bg-gray-50 flex justify-between items-center text-sm";
                     div.innerHTML = `
@@ -1919,10 +1931,9 @@
                             <p class="text-xs text-brand font-bold">
                                 <span class="line-through text-gray-400 mr-1">Was: $${p.price.toFixed(2)}</span> 
                                 <span class="text-red-600">Now: $${promoPrice.toFixed(2)} (${disc}% OFF)</span>
-                                <span class="block text-purple-700 text-xs">Time left: ${timeLeftStr} | Stock: ${p.stock}</span>
                             </p>
                         </div>
-                        <button onclick="broadcastSingleProductPromo(${p.id})" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"><i class="fab fa-whatsapp"></i> Promo</button>
+                        <button onclick="broadcastSingleProductPromo(${p.id})" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold"><i class="fab fa-whatsapp"></i> Promo</button>
                     `;
                     promoList.appendChild(div);
                 });
@@ -1931,7 +1942,7 @@
             const vipBody = document.getElementById('vip-table-body');
             vipBody.innerHTML = '';
             if (vipCustomers.length === 0) {
-                vipBody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-400 italic">No customers graded yet. Customers are graded automatically as they transact.</td></tr>`;
+                vipBody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-400 italic">No customers graded yet.</td></tr>`;
             } else {
                 vipCustomers.sort((a, b) => b.totalSpend - a.totalSpend);
                 vipCustomers.forEach((v, index) => {
@@ -1945,10 +1956,7 @@
                     tr.innerHTML = `
                         <td class="p-3 font-bold">${index + 1}. ${v.name}</td>
                         <td class="p-3 text-xs">${v.phone}</td>
-                        <td class="p-3 font-extrabold text-brand">
-                            $${v.totalSpend.toFixed(2)} 
-                            <span class="block text-xs px-2 py-0.5 rounded font-bold ${badgeColor} mt-0.5 w-max">${grade}</span>
-                        </td>
+                        <td class="p-3 font-extrabold text-brand">$${v.totalSpend.toFixed(2)} <span class="block text-xs px-2 py-0.5 rounded font-bold ${badgeColor} mt-0.5 w-max">${grade}</span></td>
                         <td class="p-3 text-right space-x-2">
                             <button onclick="broadcastToCustomer('${v.phone}')" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold"><i class="fab fa-whatsapp"></i> Promo</button>
                             <button onclick="deleteVipCustomer(${v.id})" class="text-red-500 font-bold text-xs">Delete</button>
@@ -1964,22 +1972,22 @@
             if (!p) return;
             const disc = parseFloat(p.discountPct) || 0;
             const promoPrice = p.price * (1 - disc / 100);
-            const msg = `🌟 AURA CHIC BOUTIQUE PROMOTION 🌟\nCheck out our special offer on ${p.name}!\n- Was: $${p.price.toFixed(2)}\n- Now: $${promoPrice.toFixed(2)} (${disc}% OFF)\n- Stock Available: ${p.stock}\n\nVisit us or reply to order! May God bless your hustles!!!`;
+            const msg = `🌟 SPECIAL PROMOTION FROM ${storeSettings.name.toUpperCase()} 🌟\nCheck out ${p.name}!\n- Was: $${p.price.toFixed(2)}\n- Now: $${promoPrice.toFixed(2)} (${disc}% OFF)\nVisit us or reply to order!`;
             window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
         function broadcastToCustomer(phone) {
-            const promos = products.filter(p => p.promotion && p.discountPct !== '' && p.discountPct !== null && !isNaN(p.discountPct) && parseFloat(p.discountPct) > 0).map(p => {
+            const promos = products.filter(p => p.promotion && p.discountPct > 0).map(p => {
                 const disc = parseFloat(p.discountPct) || 0;
                 const promoPrice = p.price * (1 - disc / 100);
                 return `- ${p.name}: Was $${p.price.toFixed(2)} | Now $${promoPrice.toFixed(2)} (${disc}% OFF)`;
             }).join('\n');
-            const msg = `🌟 AURA CHIC BOUTIQUE SPECIAL PROMO 🌟\nHello valued partner! Here are our current promotions:\n${promos}\n\nThank you for your continued support! May God bless your hustles!!!`;
+            const msg = `🌟 PROMOTIONS FROM ${storeSettings.name.toUpperCase()} 🌟\nHere are our current offers:\n${promos}\n\nThank you for your support!`;
             window.open(`https://api.whatsapp.com/send?phone=${phone.replace(/\D/g,'')}&text=${encodeURIComponent(msg)}`, '_blank');
         }
 
         function deleteVipCustomer(id) {
-            if (confirm('Are you sure you want to remove this client from the active records?')) {
+            if (confirm('Remove client?')) {
                 vipCustomers = vipCustomers.filter(v => v.id !== id);
                 saveData();
                 renderPromoAndVipDashboard();
@@ -1990,13 +1998,7 @@
         function holdCurrentCart() {
             if (cart.length === 0) return alert('Cart is empty.');
             const holdName = prompt('Enter customer name for parked sale:') || 'Walk-in Parked';
-            heldReceipts.push({
-                id: Date.now(),
-                name: holdName,
-                time: new Date().toLocaleTimeString(),
-                items: [...cart],
-                total: cart.reduce((s, i) => s + (i.price * i.qty), 0)
-            });
+            heldReceipts.push({ id: Date.now(), name: holdName, time: new Date().toLocaleTimeString(), items: [...cart], total: cart.reduce((s, i) => s + (i.price * i.qty), 0) });
             cart = [];
             saveData();
             renderCart();
@@ -2016,16 +2018,13 @@
             const list = document.getElementById('held-receipts-list');
             list.innerHTML = '';
             if (heldReceipts.length === 0) {
-                list.innerHTML = '<p class="text-gray-400 text-center py-4">No held receipts found.</p>';
+                list.innerHTML = '<p class="text-gray-400 text-center py-4">No held receipts.</p>';
             } else {
                 heldReceipts.forEach(h => {
                     const div = document.createElement('div');
                     div.className = "p-3 bg-gray-50 border rounded-xl flex justify-between items-center";
                     div.innerHTML = `
-                        <div>
-                            <p class="font-bold text-gray-900">${h.name} (${h.time})</p>
-                            <p class="text-xs text-gray-500">${h.items.length} items - Total: $${h.total.toFixed(2)}</p>
-                        </div>
+                        <div><p class="font-bold text-gray-900">${h.name} (${h.time})</p><p class="text-xs text-gray-500">${h.items.length} items - Total: $${h.total.toFixed(2)}</p></div>
                         <div class="space-x-2">
                             <button onclick="retrieveHeldCart(${h.id})" class="bg-brand text-white px-3 py-1.5 rounded-lg text-xs font-bold">Retrieve</button>
                             <button onclick="deleteHeldCart(${h.id})" class="bg-red-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold">Clear</button>
@@ -2134,6 +2133,11 @@
             grid.innerHTML = '';
             const filtered = products.filter(p => (currentCategory === 'All' || p.category === currentCategory) && (p.name.toLowerCase().includes(search) || p.code.toLowerCase().includes(search)));
             
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div class="col-span-full text-center text-gray-400 py-12 text-sm italic">No products found. Add products in the Inventory tab.</div>';
+                return;
+            }
+
             filtered.forEach(p => {
                 const card = document.createElement('div');
                 const isPromo = p.promotion && p.discountPct !== '' && p.discountPct !== null && !isNaN(p.discountPct) && parseFloat(p.discountPct) > 0;
@@ -2206,7 +2210,7 @@
             const list = document.getElementById('cart-items-list');
             const totalEl = document.getElementById('cart-total');
             if (cart.length === 0) {
-                list.innerHTML = `<div class="text-center text-gray-400 py-16"><i class="fas fa-basket-shopping text-4xl mb-3"></i><p class="text-base font-semibold">Cart is empty</p></div>`;
+                list.innerHTML = `<div class="text-center text-gray-400 py-16"><i class="fas fa-basket-shopping text-4xl mb-3"></i><p class="text-base font-semibold">Your cart is empty</p></div>`;
                 totalEl.innerText = '$0.00';
                 return;
             }
@@ -2236,7 +2240,7 @@
             calculateChangeDue();
         }
 
-        // ================= STAFF & ROLES MANAGEMENT =================
+        // ================= 9. STAFF & ROLES =================
         function renderStaffTable() {
             const isAdminOrSup = currentRole.toLowerCase() === 'administrator' || currentRole.toLowerCase() === 'supervisor';
             if (!isAdminOrSup) return;
@@ -2252,7 +2256,7 @@
                     <td class="p-4 text-right space-x-2">
                         <button onclick="openResetPasswordModal(${index})" class="bg-amber-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold"><i class="fas fa-key"></i> Reset PIN</button>
                         <button onclick="editStaff(${index})" class="bg-brand text-white px-3 py-1.5 rounded-lg text-xs font-bold">Edit</button>
-                        ${s.username !== 'Samantha' && s.username !== 'Admin' ? `<button onclick="deleteStaff(${index})" class="bg-red-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold">Delete</button>` : ''}
+                        ${s.username !== 'Admin' ? `<button onclick="deleteStaff(${index})" class="bg-red-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold">Delete</button>` : ''}
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -2308,9 +2312,7 @@
             if (!customRoles.includes(roleTitle)) {
                 customRoles.push(roleTitle);
                 saveData();
-                alert(`Role "${roleTitle}" created successfully!`);
-            } else {
-                alert('This role already exists.');
+                alert(`Role "${roleTitle}" created!`);
             }
             closeCreateRoleModal();
             populateRoleDropdown();
@@ -2336,7 +2338,7 @@
             const selectedPerms = [];
             document.querySelectorAll('.staff-perm:checked').forEach(cb => selectedPerms.push(cb.value));
 
-            if (!jobRole) return alert('Please select a job role.');
+            if (!jobRole) return alert('Select job role.');
 
             if (editIdx !== '') {
                 staffAccounts[editIdx].username = username;
@@ -2350,7 +2352,7 @@
             saveData();
             closeStaffModal();
             renderStaffTable();
-            alert('Staff member role and permissions successfully saved!');
+            alert('Staff member saved successfully!');
         }
 
         function editStaff(index) {
@@ -2366,7 +2368,7 @@
         }
 
         function deleteStaff(index) {
-            if (confirm('Delete this staff account?')) {
+            if (confirm('Delete staff account?')) {
                 staffAccounts.splice(index, 1);
                 saveData();
                 renderStaffTable();
@@ -2383,7 +2385,7 @@
                 tr.className = "hover:bg-gray-50 border-b";
                 tr.innerHTML = `
                     <td class="p-4 font-bold">${acc.name}</td>
-                    <td class="p-4 text-sm">${acc.idNum ? acc.idNum : '<span class="text-gray-400 italic">No ID provided</span>'}<br>${acc.phone}</td>
+                    <td class="p-4 text-sm">${acc.idNum ? acc.idNum : '<span class="text-gray-400 italic">No ID</span>'}<br>${acc.phone}</td>
                     <td class="p-4 text-sm">${acc.address}</td>
                     <td class="p-4 font-extrabold text-brand">$${acc.balance.toFixed(2)}</td>
                     <td class="p-4 font-extrabold text-emerald-600">$${acc.limit.toFixed(2)}</td>
@@ -2454,7 +2456,7 @@
                     <td class="p-4 text-sm font-bold text-brand">${c.dueDate}</td>
                     <td class="p-4 text-right space-x-2">
                         <button onclick="openBalancePayModal('credit', ${c.id})" class="bg-brand text-white px-3 py-1.5 rounded-lg text-xs font-bold">Pay</button>
-                        <a href="https://api.whatsapp.com/send?phone=${c.phone.replace(/\D/g,'')}&text=${encodeURIComponent('Friendly reminder from Aura Chic Boutique regarding your outstanding balance of $' + c.balance.toFixed(2) + '. May God bless your hustles!!!')}" target="_blank" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold"><i class="fab fa-whatsapp"></i> Remind</a>
+                        <a href="https://api.whatsapp.com/send?phone=${c.phone.replace(/\D/g,'')}&text=${encodeURIComponent('Friendly reminder from ' + storeSettings.name + ' regarding your balance of $' + c.balance.toFixed(2))}" target="_blank" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold"><i class="fab fa-whatsapp"></i> Remind</a>
                         ${isOverdueSixMonths && isAdminOrSup ? `<button onclick="writeOffCredit(${c.id})" class="bg-red-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold">Write Off</button>` : ''}
                     </td>
                 `;
@@ -2465,13 +2467,14 @@
         function writeOffCredit(id) {
             const isAdminOrSup = currentRole.toLowerCase() === 'administrator' || currentRole.toLowerCase() === 'supervisor';
             if (!isAdminOrSup) return alert('Admin/Supervisor only.');
-            if (confirm('Write off this credit account after 6 months lapse?')) {
+            if (confirm('Write off this credit account after 6 months?')) {
                 creditLedger = creditLedger.filter(c => c.id !== id);
                 saveData();
                 renderCreditLedgerTable();
             }
         }
-        // ================= DASHBOARD & AUDIT =================
+
+        // ================= 10. SALES HISTORY AUDIT =================
         function renderDashboard() {
             const active = salesHistory.filter(s => !s.voided);
             const totalRev = active.reduce((s, i) => s + i.total, 0);
@@ -2504,10 +2507,10 @@
 
         function voidSale(id) {
             const isAdminOrSup = currentRole.toLowerCase() === 'administrator' || currentRole.toLowerCase() === 'supervisor';
-            if (!isAdminOrSup) return alert('Supervisor/Admin rights required to void sales.');
+            if (!isAdminOrSup) return alert('Supervisor/Admin rights required.');
             const s = salesHistory.find(item => item.id === id);
             if (s && !s.voided) {
-                if (confirm('Void this receipt? Stock will be returned to inventory.')) {
+                if (confirm('Void receipt and return stock?')) {
                     s.items.forEach(item => {
                         const p = products.find(prod => prod.id === item.id);
                         if (p) p.stock += item.qty;
@@ -2515,7 +2518,7 @@
                     s.voided = true;
                     saveData();
                     renderDashboard();
-                    alert('Sale successfully voided and logged for audit.');
+                    alert('Sale voided.');
                 }
             }
         }
@@ -2530,7 +2533,7 @@
 
         function openPosBalanceSearch() {
             document.getElementById('pos-balance-search-input').value = '';
-            document.getElementById('pos-balance-search-results').innerHTML = '<p class="text-gray-400 text-center py-6 text-sm italic">Type a name or phone number above to find customer account...</p>';
+            document.getElementById('pos-balance-search-results').innerHTML = '<p class="text-gray-400 text-center py-6 text-sm italic">Type name or phone...</p>';
             document.getElementById('pos-balance-modal').classList.remove('hidden');
         }
         function closePosBalanceSearch() { document.getElementById('pos-balance-modal').classList.add('hidden'); }
@@ -2540,42 +2543,28 @@
             const container = document.getElementById('pos-balance-search-results');
             container.innerHTML = '';
             if (!query) {
-                container.innerHTML = '<p class="text-gray-400 text-center py-6 text-sm italic">Type a name or phone number above to find customer account...</p>';
+                container.innerHTML = '<p class="text-gray-400 text-center py-6 text-sm italic">Type name or phone...</p>';
                 return;
             }
             const matchingAccounts = accountCustomers.filter(a => a.name.toLowerCase().includes(query) || a.phone.includes(query));
             const matchingCredit = creditLedger.filter(c => c.name.toLowerCase().includes(query) || c.phone.includes(query));
 
             if (matchingAccounts.length === 0 && matchingCredit.length === 0) {
-                container.innerHTML = '<p class="text-red-500 text-center py-4 font-bold">No matching account or credit client found.</p>';
+                container.innerHTML = '<p class="text-red-500 text-center py-4 font-bold">No client found.</p>';
                 return;
             }
 
             matchingAccounts.forEach(acc => {
                 const div = document.createElement('div');
                 div.className = "p-3 bg-purple-50 border border-purple-200 rounded-xl flex justify-between items-center";
-                div.innerHTML = `
-                    <div>
-                        <span class="text-xs bg-purple-200 text-purple-900 px-2 py-0.5 rounded font-bold">Store Account</span>
-                        <p class="font-bold text-gray-900 mt-1">${acc.name} (${acc.phone})</p>
-                        <p class="text-xs font-extrabold text-red-600">Balance Owed: $${acc.balance.toFixed(2)}</p>
-                    </div>
-                    <button onclick="closePosBalanceSearch(); openBalancePayModal('account', ${acc.id})" class="bg-brand text-white px-3 py-1.5 rounded-lg text-xs font-bold">Pay Balance</button>
-                `;
+                div.innerHTML = `<div><span class="text-xs bg-purple-200 text-purple-900 px-2 py-0.5 rounded font-bold">Store Account</span><p class="font-bold text-gray-900 mt-1">${acc.name} (${acc.phone})</p><p class="text-xs font-extrabold text-red-600">Balance Owed: $${acc.balance.toFixed(2)}</p></div><button onclick="closePosBalanceSearch(); openBalancePayModal('account', ${acc.id})" class="bg-brand text-white px-3 py-1.5 rounded-lg text-xs font-bold">Pay</button>`;
                 container.appendChild(div);
             });
 
             matchingCredit.forEach(cred => {
                 const div = document.createElement('div');
                 div.className = "p-3 bg-amber-50 border border-amber-200 rounded-xl flex justify-between items-center";
-                div.innerHTML = `
-                    <div>
-                        <span class="text-xs bg-amber-200 text-amber-900 px-2 py-0.5 rounded font-bold">Credit Client</span>
-                        <p class="font-bold text-gray-900 mt-1">${cred.name} (${cred.phone})</p>
-                        <p class="text-xs font-extrabold text-red-600">Balance Owed: $${cred.balance.toFixed(2)} (Due: ${cred.dueDate})</p>
-                    </div>
-                    <button onclick="closePosBalanceSearch(); openBalancePayModal('credit', ${cred.id})" class="bg-brand text-white px-3 py-1.5 rounded-lg text-xs font-bold">Pay Balance</button>
-                `;
+                div.innerHTML = `<div><span class="text-xs bg-amber-200 text-amber-900 px-2 py-0.5 rounded font-bold">Credit Client</span><p class="font-bold text-gray-900 mt-1">${cred.name} (${cred.phone})</p><p class="text-xs font-extrabold text-red-600">Balance Owed: $${cred.balance.toFixed(2)}</p></div><button onclick="closePosBalanceSearch(); openBalancePayModal('credit', ${cred.id})" class="bg-brand text-white px-3 py-1.5 rounded-lg text-xs font-bold">Pay</button>`;
                 container.appendChild(div);
             });
         }
@@ -2590,12 +2579,10 @@
             let clientName = '';
             if (type === 'account') {
                 const acc = accountCustomers.find(a => a.id === id);
-                clientName = acc.name;
-                currentClientBalance = acc.balance;
+                clientName = acc.name; currentClientBalance = acc.balance;
             } else {
                 const cred = creditLedger.find(c => c.id === id);
-                clientName = cred.name;
-                currentClientBalance = cred.balance;
+                clientName = cred.name; currentClientBalance = cred.balance;
             }
             document.getElementById('pay-balance-details').innerHTML = `<p><b>Client:</b> ${clientName}</p><p><b>Type:</b> ${type.toUpperCase()}</p><p class="text-red-700 font-extrabold">Current Balance Owed: $${currentClientBalance.toFixed(2)}</p>`;
             document.getElementById('balance-tendered-amount').value = '';
@@ -2639,24 +2626,21 @@
             }
 
             const changeDue = Math.max(0, amtPaid - prevBal);
-            const receiptNum = 'AC-REC-' + String(receiptCounter++).padStart(4, '0');
+            const receiptNum = 'REC-' + String(receiptCounter++).padStart(4, '0');
             const now = new Date();
             const timestamp = now.toLocaleString();
             const hour24 = now.getHours();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const dateStrISO = `${year}/${month}/${day}`;
-            const dateHyphenISO = `${year}-${month}-${day}`;
+            const dateStrISO = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')}`;
+            const dateHyphenISO = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
-            let receiptStr = `*AURA CHIC BOUTIQUE*\nTel: +263 773 452 684\n--------------------------------\nBALANCE PAYMENT RECEIPT\nReceipt: ${receiptNum}\nDate: ${timestamp}\nCustomer: ${clientName}\nPayment Method: ${method}\n--------------------------------\nPrevious Balance: $${prevBal.toFixed(2)}\nAmount Paid Today: $${amtPaid.toFixed(2)}\nChange Given: $${changeDue.toFixed(2)}\n--------------------------------\n*NEW BALANCE OWED: $${newBal.toFixed(2)}*\n--------------------------------\nStaff: ${currentUser} (${currentRole})\nMay God bless your hustles!!!`;
+            let receiptStr = `*${storeSettings.name.toUpperCase()}*\nTel: ${storeSettings.phone}\n--------------------------------\nBALANCE PAYMENT RECEIPT\nReceipt: ${receiptNum}\nDate: ${timestamp}\nCustomer: ${clientName}\nPayment Method: ${method}\n--------------------------------\nPrevious Balance: $${prevBal.toFixed(2)}\nAmount Paid Today: $${amtPaid.toFixed(2)}\nChange Given: $${changeDue.toFixed(2)}\n--------------------------------\n*NEW BALANCE OWED: $${newBal.toFixed(2)}*\n--------------------------------\nStaff: ${currentUser} (${currentRole})\nPowered by Dazzle and Shine`;
 
             lastReceiptText = receiptStr;
             lastCustomerPhone = clientPhone;
 
             salesHistory.unshift({
                 id: Date.now(), receipt: receiptNum, time: timestamp, dateIso: dateStrISO, dateHyphen: dateHyphenISO, hour: hour24, cashier: currentUser,
-                store: 'Main Store / POS 1', type: `Balance Pay`, paymentMethod: method, items: [{code: 'ACC-PAY', name: 'Account Balance Clearance', qty: 1, price: amtPaid}], total: amtPaid, phone: clientPhone, receiptStr, voided: false
+                store: storeSettings.name, type: `Balance Pay`, paymentMethod: method, items: [{code: 'ACC-PAY', name: 'Account Balance Clearance', qty: 1, price: amtPaid}], total: amtPaid, phone: clientPhone, receiptStr, voided: false
             });
 
             saveData();
@@ -2667,6 +2651,7 @@
             document.getElementById('receipt-printable-area').innerText = receiptStr;
             document.getElementById('receipt-modal').classList.remove('hidden');
         }
+
         function sendWhatsAppReceipt() {
             if (!lastCustomerPhone) {
                 const phoneInput = prompt('Enter customer WhatsApp phone number (e.g. 263773452684):');
@@ -2685,5 +2670,3 @@
     </script>
 </body>
 </html>
-
-        
