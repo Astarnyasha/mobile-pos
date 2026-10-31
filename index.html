@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POS System v7.53 - Powered by Dazzle and Shine</title>
+    <title>POS System v7.54 - Powered by Dazzle and Shine</title>
     <!-- Standalone Mobile App Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -52,7 +52,7 @@
             </div>
             <div>
                 <h2 id="login-store-title" class="text-2xl font-black tracking-wider text-gray-900 uppercase" style="font-family: serif;">MY STORE</h2>
-                <p class="text-xs font-bold tracking-widest text-brand uppercase mt-0.5">Multi-Tenant POS v7.53</p>
+                <p class="text-xs font-bold tracking-widest text-brand uppercase mt-0.5">Multi-Tenant POS v7.54</p>
                 <p id="login-store-contact" class="text-xs text-gray-500 mt-2">Configure contact in Settings</p>
             </div>
 
@@ -85,7 +85,7 @@
                     <div>
                         <h1 class="text-lg font-extrabold tracking-wide flex items-center gap-2" style="font-family: serif;">
                             <span id="header-store-name">MY STORE</span>
-                            <span class="text-xs bg-brand-accent text-white px-2 py-0.5 rounded-full font-bold font-sans">POS v7.53</span>
+                            <span class="text-xs bg-brand-accent text-white px-2 py-0.5 rounded-full font-bold font-sans">POS v7.54</span>
                         </h1>
                         <p class="text-sm text-gray-200">User: <span id="current-user-display" class="font-bold text-brand-accent text-base"></span> <span id="role-badge" class="ml-1 text-xs bg-white/20 px-2 py-0.5 rounded font-bold"></span></p>
                     </div>
@@ -983,7 +983,14 @@
             { username: 'Admin', role: 'Administrator', password: '1234', permissions: ['pos', 'inventory', 'receiving', 'stocktake', 'dailyreport', 'accounts', 'credit', 'loyalty', 'staff', 'dashboard', 'settings'] }
         ];
 
-        // 100% Empty arrays for a fresh multi-tenant platform start
+        // Ensure fresh catalog start: clear cached demo products from earlier versions if version mismatch
+        const systemVersion = "v7.54_clean";
+        if (localStorage.getItem('aura_sys_version') !== systemVersion) {
+            localStorage.removeItem('aura_products');
+            localStorage.setItem('aura_sys_version', systemVersion);
+        }
+
+        // 100% Empty arrays for a clean multi-tenant platform start
         let products = JSON.parse(localStorage.getItem('aura_products')) || [];
         let vipCustomers = JSON.parse(localStorage.getItem('aura_vip_customers')) || [];
         let cart = [];
