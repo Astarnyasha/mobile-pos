@@ -2668,7 +2668,6 @@
             document.getElementById('receipt-printable-area').innerText = receiptStr;
             document.getElementById('receipt-modal').classList.remove('hidden');
         }
-
         function sendWhatsAppReceipt() {
             if (!lastCustomerPhone) {
                 const phoneInput = prompt('Enter customer WhatsApp phone number (e.g. 263773452684):');
@@ -2679,11 +2678,13 @@
             }
             window.open(`https://api.whatsapp.com/send?phone=${lastCustomerPhone}&text=${encodeURIComponent(lastReceiptText)}`, '_blank');
         }
+    </script>
     <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js');
-  }
-</script>
-
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js');
+      }
+    </script>
 </body>
 </html>
+
+        
