@@ -1,5 +1,5 @@
 {
-  "name": "Aura Chic Boutique - POS",
+  "name": "Aura Chic POS",
   "short_name": "Aura Chic POS",
   "start_url": "./index.html",
   "display": "standalone",
@@ -8,7 +8,7 @@
   "icons": [
     {
       "src": "logo.jpg",
-      "sizes": "512x512",
+      "sizes": "160x160",
       "type": "image/jpeg"
     }
   ]
