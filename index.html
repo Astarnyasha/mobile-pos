@@ -2679,6 +2679,11 @@
             }
             window.open(`https://api.whatsapp.com/send?phone=${lastCustomerPhone}&text=${encodeURIComponent(lastReceiptText)}`, '_blank');
         }
-    </script>
+    <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js');
+  }
+</script>
+
 </body>
 </html>
