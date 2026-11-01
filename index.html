@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POS System v7.56 - Powered by Dazzle and Shine</title>
+    <title>POS System v7.57 - Powered by Dazzle and Shine</title>
     <!-- Standalone Mobile App Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -56,7 +56,7 @@
             </div>
             <div>
                 <h2 id="login-store-title" class="text-2xl font-black tracking-wider text-gray-900 uppercase" style="font-family: serif;">MY STORE</h2>
-                <p class="text-xs font-bold tracking-widest text-brand uppercase mt-0.5">Multi-Tenant POS v7.56</p>
+                <p class="text-xs font-bold tracking-widest text-brand uppercase mt-0.5">Multi-Tenant POS v7.57</p>
                 <p id="login-store-contact" class="text-xs text-gray-500 mt-2">Configure contact in Settings</p>
             </div>
 
@@ -90,7 +90,7 @@
                     <div>
                         <h1 class="text-lg font-extrabold tracking-wide flex items-center gap-2" style="font-family: serif;">
                             <span id="header-store-name">MY STORE</span>
-                            <span class="text-xs bg-brand-accent text-white px-2 py-0.5 rounded-full font-bold font-sans">POS v7.56</span>
+                            <span class="text-xs bg-brand-accent text-white px-2 py-0.5 rounded-full font-bold font-sans">POS v7.57</span>
                         </h1>
                         <p class="text-sm text-gray-200">User: <span id="current-user-display" class="font-bold text-brand-accent text-base"></span> <span id="role-badge" class="ml-1 text-xs bg-white/20 px-2 py-0.5 rounded font-bold"></span></p>
                     </div>
@@ -976,8 +976,8 @@
         // Multi-Tenant Store Branding Settings stored in localStorage
         let storeSettings = JSON.parse(localStorage.getItem('aura_store_settings')) || {
             name: "MY STORE",
-            phone: "+263775476947",
-            email: "support@dazzleandshine.co.zw",
+            phone: "+263770000000",
+            email: "support@yourbusiness.com",
             logo: ""
         };
 
@@ -988,7 +988,7 @@
         
         let customRoles = JSON.parse(localStorage.getItem('aura_custom_roles')) || ['Cashier', 'Accountant', 'Receiving Clerk', 'Buyer', 'Security Guard', 'Director', 'Administrator', 'Supervisor'];
         
-        const systemVersion = "v7.56_custom_logo";
+        const systemVersion = "v7.57_neutral";
         if (localStorage.getItem('aura_sys_version') !== systemVersion) {
             localStorage.setItem('aura_sys_version', systemVersion);
         }
