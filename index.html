@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POS System v7.55 - Powered by Dazzle and Shine</title>
+    <title>POS System v7.56 - Powered by Dazzle and Shine</title>
     <!-- Standalone Mobile App Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -12,8 +12,8 @@
     <meta name="theme-color" content="#556B2F">
     
     <!-- Standalone App Icon -->
-    <link rel="icon" type="image/jpeg" href="logo.jpg">
-    <link rel="apple-touch-icon" href="logo.jpg">
+    <link id="favicon-link" rel="icon" type="image/jpeg" href="">
+    <link id="apple-touch-icon-link" rel="apple-touch-icon" href="">
     <link rel="manifest" href="manifest.json">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -47,12 +47,16 @@
     <!-- Auth Overlay (Anti-Autofill Protected) -->
     <div id="auth-overlay" class="fixed inset-0 bg-brand/95 backdrop-blur-md z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 space-y-5 text-center">
-            <div class="w-28 h-28 rounded-full mx-auto border-4 border-brand-accent shadow-xl overflow-hidden bg-white flex items-center justify-center p-1">
-                <img id="login-logo-img" src="logo.jpg" alt="Store Logo" class="w-full h-full object-cover rounded-full" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100%\' height=\'100%\' fill=\'%23ddd\'/><text x=\'50%\' y=\'50%\' font-size=\'14\' text-anchor=\'middle\' dominant-baseline=\'middle\' fill=\'%23666\'>LOGO</text></svg>'">
+            <div id="login-logo-container" class="w-28 h-28 rounded-full mx-auto border-4 border-brand-accent shadow-xl overflow-hidden bg-white flex items-center justify-center p-1">
+                <img id="login-logo-img" src="" alt="Store Logo" class="w-full h-full object-cover rounded-full hidden">
+                <div id="login-logo-placeholder" class="text-xs text-gray-400 font-bold flex flex-col items-center justify-center">
+                    <i class="fas fa-camera text-2xl mb-1 text-gray-300"></i>
+                    <span>NO LOGO</span>
+                </div>
             </div>
             <div>
                 <h2 id="login-store-title" class="text-2xl font-black tracking-wider text-gray-900 uppercase" style="font-family: serif;">MY STORE</h2>
-                <p class="text-xs font-bold tracking-widest text-brand uppercase mt-0.5">Multi-Tenant POS v7.55</p>
+                <p class="text-xs font-bold tracking-widest text-brand uppercase mt-0.5">Multi-Tenant POS v7.56</p>
                 <p id="login-store-contact" class="text-xs text-gray-500 mt-2">Configure contact in Settings</p>
             </div>
 
@@ -79,13 +83,14 @@
         <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                    <div class="w-12 h-12 rounded-full bg-white border-2 border-brand-accent shadow-md flex items-center justify-center overflow-hidden p-0.5">
-                        <img id="header-logo-img" src="logo.jpg" alt="Logo" class="w-full h-full object-cover rounded-full" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'50\' height=\'50\'><rect width=\'100%\' height=\'100%\' fill=\'%23ddd\'/><text x=\'50%\' y=\'50%\' font-size=\'10\' text-anchor=\'middle\' dominant-baseline=\'middle\' fill=\'%23666\'>LOGO</text></svg>'">
+                    <div id="header-logo-container" class="w-12 h-12 rounded-full bg-white border-2 border-brand-accent shadow-md flex items-center justify-center overflow-hidden p-0.5">
+                        <img id="header-logo-img" src="" alt="Logo" class="w-full h-full object-cover rounded-full hidden">
+                        <span id="header-logo-placeholder" class="text-[10px] text-gray-400 font-bold">LOGO</span>
                     </div>
                     <div>
                         <h1 class="text-lg font-extrabold tracking-wide flex items-center gap-2" style="font-family: serif;">
                             <span id="header-store-name">MY STORE</span>
-                            <span class="text-xs bg-brand-accent text-white px-2 py-0.5 rounded-full font-bold font-sans">POS v7.55</span>
+                            <span class="text-xs bg-brand-accent text-white px-2 py-0.5 rounded-full font-bold font-sans">POS v7.56</span>
                         </h1>
                         <p class="text-sm text-gray-200">User: <span id="current-user-display" class="font-bold text-brand-accent text-base"></span> <span id="role-badge" class="ml-1 text-xs bg-white/20 px-2 py-0.5 rounded font-bold"></span></p>
                     </div>
@@ -636,7 +641,7 @@
                 <!-- Store Profile & Branding -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
                     <h2 class="text-xl font-bold text-gray-900"><i class="fas fa-store text-brand mr-2"></i> Store Profile & Multi-Tenant Branding</h2>
-                    <p class="text-sm text-gray-500">Configure your individual shop name, phone number, email, and logo for receipts and screens.</p>
+                    <p class="text-sm text-gray-500">Configure your individual shop name, phone number, email, and upload your custom store logo.</p>
                     
                     <div class="space-y-3">
                         <div>
@@ -652,12 +657,15 @@
                             <input type="text" id="setting-store-email" placeholder="e.g. info@business.com" class="w-full px-4 py-2 border rounded-xl text-sm font-semibold">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">Logo Filename</label>
-                            <input type="text" id="setting-store-logo" placeholder="logo.jpg" class="w-full px-4 py-2 border rounded-xl text-sm font-semibold">
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Upload Store Logo (Image)</label>
+                            <input type="file" id="setting-store-logo-file" accept="image/*" onchange="handleLogoUpload(event)" class="w-full px-3 py-2 border rounded-xl text-xs bg-gray-50 cursor-pointer">
+                            <p class="text-[11px] text-gray-400 mt-1">Uploads directly into system memory (saves automatically).</p>
                         </div>
-                        <button onclick="saveStoreSettings()" class="w-full bg-brand text-white py-3 rounded-xl font-bold transition shadow hover:bg-brand-dark">
-                            Save Store Profile
-                        </button>
+                        <div class="pt-2">
+                            <button onclick="saveStoreSettings()" class="w-full bg-brand text-white py-3 rounded-xl font-bold transition shadow hover:bg-brand-dark">
+                                Save Store Profile
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -970,7 +978,7 @@
             name: "MY STORE",
             phone: "+263775476947",
             email: "support@dazzleandshine.co.zw",
-            logo: "logo.jpg"
+            logo: ""
         };
 
         let currentUser = localStorage.getItem('aura_current_user') || '';
@@ -980,11 +988,8 @@
         
         let customRoles = JSON.parse(localStorage.getItem('aura_custom_roles')) || ['Cashier', 'Accountant', 'Receiving Clerk', 'Buyer', 'Security Guard', 'Director', 'Administrator', 'Supervisor'];
         
-        // Ensure fresh clean start: reset staff list to Admin only and empty products
-        const systemVersion = "v7.55_admin_only";
+        const systemVersion = "v7.56_custom_logo";
         if (localStorage.getItem('aura_sys_version') !== systemVersion) {
-            localStorage.removeItem('aura_products');
-            localStorage.removeItem('aura_staff');
             localStorage.setItem('aura_sys_version', systemVersion);
         }
 
@@ -1022,24 +1027,54 @@
         function applyStoreBranding() {
             document.getElementById('login-store-title').innerText = storeSettings.name;
             document.getElementById('login-store-contact').innerText = `${storeSettings.phone} | ${storeSettings.email}`;
-            document.getElementById('login-logo-img').src = storeSettings.logo;
-            
             document.getElementById('header-store-name').innerText = storeSettings.name;
-            document.getElementById('header-logo-img').src = storeSettings.logo;
+
+            const loginImg = document.getElementById('login-logo-img');
+            const loginPlaceholder = document.getElementById('login-logo-placeholder');
+            const headerImg = document.getElementById('header-logo-img');
+            const headerPlaceholder = document.getElementById('header-logo-placeholder');
+
+            if (storeSettings.logo && storeSettings.logo.length > 0) {
+                loginImg.src = storeSettings.logo;
+                loginImg.classList.remove('hidden');
+                loginPlaceholder.classList.add('hidden');
+
+                headerImg.src = storeSettings.logo;
+                headerImg.classList.remove('hidden');
+                headerPlaceholder.classList.add('hidden');
+
+                document.getElementById('favicon-link').href = storeSettings.logo;
+                document.getElementById('apple-touch-icon-link').href = storeSettings.logo;
+            } else {
+                loginImg.classList.add('hidden');
+                loginPlaceholder.classList.remove('hidden');
+                headerImg.classList.add('hidden');
+                headerPlaceholder.classList.remove('hidden');
+            }
+        }
+
+        function handleLogoUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                storeSettings.logo = e.target.result; // Base64 Data URL
+                applyStoreBranding();
+                alert('Logo uploaded successfully! Click "Save Store Profile" to store it permanently.');
+            };
+            reader.readAsDataURL(file);
         }
 
         function renderSettingsTab() {
             document.getElementById('setting-store-name').value = storeSettings.name;
             document.getElementById('setting-store-phone').value = storeSettings.phone;
             document.getElementById('setting-store-email').value = storeSettings.email;
-            document.getElementById('setting-store-logo').value = storeSettings.logo;
         }
 
         function saveStoreSettings() {
             storeSettings.name = document.getElementById('setting-store-name').value.trim() || "MY STORE";
             storeSettings.phone = document.getElementById('setting-store-phone').value.trim();
             storeSettings.email = document.getElementById('setting-store-email').value.trim();
-            storeSettings.logo = document.getElementById('setting-store-logo').value.trim() || "logo.jpg";
             
             localStorage.setItem('aura_store_settings', JSON.stringify(storeSettings));
             applyStoreBranding();
