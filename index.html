@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POS System v7.57 - Powered by Dazzle and Shine</title>
+    <title>POS System v7.57 - Cloud Powered by Dazzle and Shine</title>
     <!-- Standalone Mobile App Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -15,6 +15,10 @@
     <link id="favicon-link" rel="icon" type="image/jpeg" href="">
     <link id="apple-touch-icon-link" rel="apple-touch-icon" href="">
     <link rel="manifest" href="manifest.json">
+
+    <!-- Firebase SDK Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -56,7 +60,7 @@
             </div>
             <div>
                 <h2 id="login-store-title" class="text-2xl font-black tracking-wider text-gray-900 uppercase" style="font-family: serif;">MY STORE</h2>
-                <p class="text-xs font-bold tracking-widest text-brand uppercase mt-0.5">Multi-Tenant POS v7.57</p>
+                <p class="text-xs font-bold tracking-widest text-brand uppercase mt-0.5">Multi-Tenant Cloud POS v7.57</p>
                 <p id="login-store-contact" class="text-xs text-gray-500 mt-2">Configure contact in Settings</p>
             </div>
 
@@ -90,7 +94,7 @@
                     <div>
                         <h1 class="text-lg font-extrabold tracking-wide flex items-center gap-2" style="font-family: serif;">
                             <span id="header-store-name">MY STORE</span>
-                            <span class="text-xs bg-brand-accent text-white px-2 py-0.5 rounded-full font-bold font-sans">POS v7.57</span>
+                            <span class="text-xs bg-brand-accent text-white px-2 py-0.5 rounded-full font-bold font-sans">Cloud v7.57</span>
                         </h1>
                         <p class="text-sm text-gray-200">User: <span id="current-user-display" class="font-bold text-brand-accent text-base"></span> <span id="role-badge" class="ml-1 text-xs bg-white/20 px-2 py-0.5 rounded font-bold"></span></p>
                     </div>
@@ -973,9 +977,23 @@
 
     <!-- APPLICATION JAVASCRIPT -->
     <script>
-        // Multi-Tenant Store Branding Settings stored in localStorage
+        // TODO: Replace with your actual Firebase project configuration keys from the Firebase Console
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY_HERE",
+            authDomain: "your-project-id.firebaseapp.com",
+            projectId: "your-project-id",
+            storageBucket: "your-project-id.appspot.com",
+            messagingSenderId: "SENDER_ID",
+            appId: "APP_ID"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Multi-Tenant Store Branding Settings stored in localStorage & Cloud
         let storeSettings = JSON.parse(localStorage.getItem('aura_store_settings')) || {
-            name: "MY STORE",
+            name: "MY_STORE",
             phone: "+263770000000",
             email: "support@yourbusiness.com",
             logo: ""
@@ -988,7 +1006,7 @@
         
         let customRoles = JSON.parse(localStorage.getItem('aura_custom_roles')) || ['Cashier', 'Accountant', 'Receiving Clerk', 'Buyer', 'Security Guard', 'Director', 'Administrator', 'Supervisor'];
         
-        const systemVersion = "v7.57_neutral";
+        const systemVersion = "v7.57_cloud";
         if (localStorage.getItem('aura_sys_version') !== systemVersion) {
             localStorage.setItem('aura_sys_version', systemVersion);
         }
@@ -1020,9 +1038,78 @@
             applyStoreBranding();
             ensureProductCodes();
             checkPromoExpirations();
+            loadCloudData(); // Sync live data from Firebase Firestore
             logout();
             resetInactivityTimer();
         };
+
+        // ================= CLOUD SYNC FUNCTIONS =================
+        function getStoreDocId() {
+            return (storeSettings.name || "MY_STORE").replace(/[^a-zA-Z0-9]/g, '_');
+        }
+
+        function saveData() {
+            // 1. Save locally for instant offline performance
+            localStorage.setItem('aura_products', JSON.stringify(products));
+            localStorage.setItem('aura_vip_customers', JSON.stringify(vipCustomers));
+            localStorage.setItem('aura_sales', JSON.stringify(salesHistory));
+            localStorage.setItem('aura_credit', JSON.stringify(creditLedger));
+            localStorage.setItem('aura_account_customers', JSON.stringify(accountCustomers));
+            localStorage.setItem('aura_receiving', JSON.stringify(receivingHistory));
+            localStorage.setItem('aura_price_audit', JSON.stringify(priceAuditLog));
+            localStorage.setItem('aura_staff', JSON.stringify(staffAccounts));
+            localStorage.setItem('aura_custom_roles', JSON.stringify(customRoles));
+            localStorage.setItem('aura_admin_password', adminPassword);
+            localStorage.setItem('aura_receipt_counter', receiptCounter);
+            localStorage.setItem('aura_grn_counter', grnCounter);
+            localStorage.setItem('aura_store_settings', JSON.stringify(storeSettings));
+
+            // 2. Sync to Firebase Cloud Firestore in the background
+            const storeKey = getStoreDocId();
+            db.collection("stores").doc(storeKey).set({
+                storeSettings,
+                products,
+                vipCustomers,
+                salesHistory,
+                creditLedger,
+                accountCustomers,
+                receivingHistory,
+                priceAuditLog,
+                staffAccounts,
+                customRoles,
+                adminPassword,
+                receiptCounter,
+                grnCounter,
+                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+            }).catch(err => console.log("Cloud sync offline mode active:", err));
+        }
+
+        function loadCloudData() {
+            const storeKey = getStoreDocId();
+            db.collection("stores").doc(storeKey).get().then((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    if (data.products) products = data.products;
+                    if (data.vipCustomers) vipCustomers = data.vipCustomers;
+                    if (data.salesHistory) salesHistory = data.salesHistory;
+                    if (data.creditLedger) creditLedger = data.creditLedger;
+                    if (data.accountCustomers) accountCustomers = data.accountCustomers;
+                    if (data.receivingHistory) receivingHistory = data.receivingHistory;
+                    if (data.priceAuditLog) priceAuditLog = data.priceAuditLog;
+                    if (data.staffAccounts) staffAccounts = data.staffAccounts;
+                    if (data.customRoles) customRoles = data.customRoles;
+                    if (data.adminPassword) adminPassword = data.adminPassword;
+                    if (data.receiptCounter) receiptCounter = data.receiptCounter;
+                    if (data.grnCounter) grnCounter = data.grnCounter;
+                    if (data.storeSettings) {
+                        storeSettings = data.storeSettings;
+                        applyStoreBranding();
+                    }
+                    saveData(); // Refresh local storage with cloud state
+                    console.log("Cloud data successfully synced!");
+                }
+            }).catch(err => console.log("Using local cached storage:", err));
+        }
 
         function applyStoreBranding() {
             document.getElementById('login-store-title').innerText = storeSettings.name;
@@ -1076,9 +1163,9 @@
             storeSettings.phone = document.getElementById('setting-store-phone').value.trim();
             storeSettings.email = document.getElementById('setting-store-email').value.trim();
             
-            localStorage.setItem('aura_store_settings', JSON.stringify(storeSettings));
+            saveData();
             applyStoreBranding();
-            alert('Store profile and branding updated successfully!');
+            alert('Store profile and branding updated and synced to cloud successfully!');
         }
 
         function resetInactivityTimer() {
@@ -1160,28 +1247,13 @@
             document.getElementById('auth-overlay').classList.remove('hidden');
         }
 
-        function saveData() {
-            localStorage.setItem('aura_products', JSON.stringify(products));
-            localStorage.setItem('aura_vip_customers', JSON.stringify(vipCustomers));
-            localStorage.setItem('aura_sales', JSON.stringify(salesHistory));
-            localStorage.setItem('aura_credit', JSON.stringify(creditLedger));
-            localStorage.setItem('aura_account_customers', JSON.stringify(accountCustomers));
-            localStorage.setItem('aura_receiving', JSON.stringify(receivingHistory));
-            localStorage.setItem('aura_price_audit', JSON.stringify(priceAuditLog));
-            localStorage.setItem('aura_staff', JSON.stringify(staffAccounts));
-            localStorage.setItem('aura_custom_roles', JSON.stringify(customRoles));
-            localStorage.setItem('aura_admin_password', adminPassword);
-            localStorage.setItem('aura_receipt_counter', receiptCounter);
-            localStorage.setItem('aura_grn_counter', grnCounter);
-        }
-
         function triggerManualBackup() {
             const dataDump = { storeSettings, date: new Date().toISOString(), products, vipCustomers, salesHistory, creditLedger, accountCustomers, receivingHistory, priceAuditLog, staffAccounts, customRoles };
             const blob = new Blob([JSON.stringify(dataDump, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `${storeSettings.name.replace(/\s+/g, '_')}_Backup_${new Date().toISOString().split('T')[0]}.json`;
+            a.download = `${storeSettings.name.replace(/\s+/g, '_')}_CloudBackup_${new Date().toISOString().split('T')[0]}.json`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
